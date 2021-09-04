@@ -1,29 +1,39 @@
 <template>
-  <div class="Posts">
+  <div class="posts">
     <h1>Home</h1>
-    <PostList :posts="posts" />
-    <button @click="handleClick">Delete a post</button>
+    <div v-if="error">{{ error }}</div>
+    <div v-if="posts.length">
+      <PostList :posts="posts" />
+    </div>
+    <div v-else>
+      <Spinner/>
+    </div>
+    <button>Delete a post</button>
   </div>
 </template>
 
 <script>
-import { ref } from '@vue/reactivity'
+import getPosts from '../composables/getPosts'
 // component imports
-import PostList from '../components/PostList.vue'
+import PostList from "../components/PostList.vue"
+import Spinner from "../components/Spinner.vue"
 export default {
-  name: 'Home',
-  components: { PostList },
-  setup() {  
-    const posts = ref([
-      { title: 'welcome to the blog', body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in imperdiet nisi. Vestibulum eu dui dictum, ornare est non, dignissim dui. Donec at ex nulla. Aenean sem tortor, bibendum ac accumsan vel, elementum vel turpis. Nam auctor egestas pulvinar. Aenean placerat finibus finibus. Praesent dictum velit at purus aliquam, sit amet mattis est molestie. Duis a nulla et mauris luctus feugiat nec cursus odio. Nam elementum vitae est eu porttitor. Nulla vestibulum gravida magna eu ultricies. Nunc posuere tincidunt pellentesque. Sed id condimentum nisl, ultricies viverra orci. Fusce sit amet massa ut nibh feugiat elementum ac id est.', id: 1 },
-      { title: 'top 5 CSS tips', body: 'lorem ipsum', id: 2 },
-    ])
+  name: "Home",
+  components: { PostList, Spinner },
+  setup() {
+    const {posts, error, load} = getPosts()
 
-    const handleClick = () => {
-      posts.value.pop()
-    }
+    load()
     
-    return { posts, handleClick }
+    return { posts, error };
   },
-}
+};
 </script>
+
+<style>
+  .posts {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+</style>
