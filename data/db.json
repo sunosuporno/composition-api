@@ -37,6 +37,15 @@
         "front-end"
       ],
       "id": 4
+    },
+    {
+      "title": "New Post",
+      "body": "Hello, good morning y'all",
+      "tags": [
+        "html",
+        "css"
+      ],
+      "id": 5
     }
   ]
 }

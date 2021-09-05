@@ -15,12 +15,16 @@
 
 <script>
 import { ref } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const title = ref("");
     const body = ref("");
     const tag = ref("");
     const tags = ref([]);
+
+    const router = useRouter();
+    console.log(router);
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
@@ -43,9 +47,7 @@ export default {
             tags: tags.value,
           }),
         });
-        title.value = "";
-        body.value = "";
-        tags.value = [];
+        router.push({name: "UsingProps"});
       } catch (err) {
         console.log(err);
       }
